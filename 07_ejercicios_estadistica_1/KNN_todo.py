@@ -59,7 +59,12 @@ class customKNN:
 
         dist = 0
         #cálculo de la distancia mahalanobis. Solo tenéis que utilizar la librería de Numpy para implementarla
-     
+        #se diferencia de la distancia euclídea en que tiene en cuenta la correlación entre las variables aleatorias. 
+        z = zip(instance1, instance2)
+        cov = np.cov(z) # matriz de covarianza
+        inv = np.linalg.inv(cov) # inversa de matriz de covarianza
+
+         
         return dist
 
     def getDistance(self, instance1, instance2, length):
