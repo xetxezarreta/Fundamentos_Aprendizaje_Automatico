@@ -55,16 +55,14 @@ class customKNN:
             distance += abs(instance1[x] - instance2[x])
         return distance
 
-    def mahalanobisDistance(self, instance1, instance2, length):
-
-        dist = 0
+    def mahalanobisDistance(self, instance1, instance2, length):        
         #cálculo de la distancia mahalanobis. Solo tenéis que utilizar la librería de Numpy para implementarla
         #se diferencia de la distancia euclídea en que tiene en cuenta la correlación entre las variables aleatorias. 
-        z = zip(instance1, instance2)
-        cov = np.cov(z) # matriz de covarianza
-        inv = np.linalg.inv(cov) # inversa de matriz de covarianza
-
-         
+        e = instance1 - instance2
+        X = np.vstack([instance1, instance2])
+        cov = np.cov(X.T) 
+        covinv = np.linalg.inv(cov)
+        dist = np.sqrt(np.sum(np.dot(e, covinv) * e, axis = 1))         
         return dist
 
     def getDistance(self, instance1, instance2, length):
@@ -95,7 +93,6 @@ class customKNN:
             neighbors.append(distances[x][0])
         return neighbors
 
-
     def getResponse(self, neighbors):
         """
         Partiendo de una lista de vecinos, hay que predecir su clase.
@@ -105,17 +102,19 @@ class customKNN:
         :param neighbors:
         :return: clase a la que pertenece la instancia
         """
+        print("eeiiiiiiiiiiii", neighbors)
         classVotes = {}
         for x in range(len(neighbors)):
             #hacer un recuento de votos por cada vecino
-            print("")
-
-        return 1#clase a la que pertenece la instancia
-
-
-
-
-
+            d_class = neighbors[x][-1]
+            if d_class in classVotes:
+                classVotes[d_class] += 1
+            else:
+                classVotes[d_class] = 1
+        #clase a la que pertenece la instancia
+        predicted_class = max(classVotes.items(), key=operator.itemgetter(1))[0]
+        return predicted_class        
+            
     def getAccuracy(self, predictions):
         correct = 0
         for x in range(len(self.__testSet)):
@@ -144,7 +143,7 @@ def main():
 
     k = 3
 
-    knn = customKNN(k, "manhattan", trainingSet, testSet)
+    knn = customKNN(k, "mahalanobis", trainingSet, testSet)
     knn.predict()
 
 main()
