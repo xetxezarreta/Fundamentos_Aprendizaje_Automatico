@@ -102,7 +102,6 @@ class customKNN:
         :param neighbors:
         :return: clase a la que pertenece la instancia
         """
-        print("eeiiiiiiiiiiii", neighbors)
         classVotes = {}
         for x in range(len(neighbors)):
             #hacer un recuento de votos por cada vecino
