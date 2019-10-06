@@ -45,7 +45,6 @@ class customKNN:
         distance = 0
         for x in range(length):
             #implementar cálculo de la distancia euclidea
-            a = instance1[x]
             distance += pow((instance1[x] - instance2[x]), 2)
         return math.sqrt(distance)
 
@@ -53,14 +52,14 @@ class customKNN:
         distance = 0
         for x in range(length):
             #implementar cálculo de la distancia manhattan
-            print("")
-
+            distance += abs(instance1[x] - instance2[x])
         return distance
 
     def mahalanobisDistance(self, instance1, instance2, length):
 
         dist = 0
         #cálculo de la distancia mahalanobis. Solo tenéis que utilizar la librería de Numpy para implementarla
+     
         return dist
 
     def getDistance(self, instance1, instance2, length):
@@ -140,7 +139,7 @@ def main():
 
     k = 3
 
-    knn = customKNN(k, "euclidean", trainingSet, testSet)
+    knn = customKNN(k, "manhattan", trainingSet, testSet)
     knn.predict()
 
 main()
