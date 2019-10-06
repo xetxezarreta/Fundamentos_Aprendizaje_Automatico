@@ -133,7 +133,7 @@ def main():
     trainingSet = []
     testSet = []
     split = 0.67
-    loadDataset('iris.data', split, trainingSet, testSet)
+    loadDataset('data/iris.data', split, trainingSet, testSet)
     print('Train set: ' + repr(len(trainingSet)))
     print('Test set: ' + repr(len(testSet)))
 
