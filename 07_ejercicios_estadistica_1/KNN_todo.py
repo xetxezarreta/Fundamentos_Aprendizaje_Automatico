@@ -45,7 +45,8 @@ class customKNN:
         distance = 0
         for x in range(length):
             #implementar cálculo de la distancia euclidea
-            print("")
+            a = instance1[x]
+            distance += pow((instance1[x] - instance2[x]), 2)
         return math.sqrt(distance)
 
     def manhattanDistance(self, instance1, instance2, length):
@@ -133,13 +134,13 @@ def main():
     trainingSet = []
     testSet = []
     split = 0.67
-    loadDataset('data/iris.data', split, trainingSet, testSet)
+    loadDataset('07_ejercicios_estadistica_1/data/iris.data', split, trainingSet, testSet)
     print('Train set: ' + repr(len(trainingSet)))
     print('Test set: ' + repr(len(testSet)))
 
     k = 3
 
-    knn = customKNN(k, "mahalanobis", trainingSet, testSet)
+    knn = customKNN(k, "euclidean", trainingSet, testSet)
     knn.predict()
 
 main()
