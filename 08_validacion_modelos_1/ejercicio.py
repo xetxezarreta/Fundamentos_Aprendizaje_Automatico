@@ -41,14 +41,15 @@ class CrossValidator:
 
             score += accuracy_score(y_test, y_pred)
         score = score / self.k_folds
-        return score
-        
-        
+        return score      
 
 iris = datasets.load_iris()
 df = pd.DataFrame(iris['data'], columns=iris['feature_names'])
 df['target'] = pd.Categorical.from_codes(iris['target'], iris['target_names'])
 
-cv = CrossValidator(df, 10, RandomForestClassifier())
-score = cv.crossValidate()
-print('Accuracy: ' + str(score*100) + '%')
+# Mi cross validation
+my_cv = CrossValidator(df, 10, RandomForestClassifier())
+score = my_cv.crossValidate()
+print('My CV accuracy: ' + str(score*100) + '%')
+
+# S
