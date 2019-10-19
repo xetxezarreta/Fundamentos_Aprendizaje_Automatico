@@ -4,10 +4,11 @@ from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
+from sklearn.model_selection import cross_validate
 
 class CrossValidator:
     def __init__(self, dataset, k_folds, algorithm):
-        self.dataset = shuffle(dataset)
+        self.dataset = shuffle(dataset, random_state=0)
         self.k_folds = k_folds
         self.algorithm = algorithm
         # Dividimos el dataset en folds iguales
@@ -39,17 +40,23 @@ class CrossValidator:
             y_test = test.iloc[:,-1]
             y_pred = model.predict(x_test)
 
+            # Calculamos el accuracy
             score += accuracy_score(y_test, y_pred)
-        score = score / self.k_folds
+        score /= self.k_folds
         return score      
 
 iris = datasets.load_iris()
 df = pd.DataFrame(iris['data'], columns=iris['feature_names'])
 df['target'] = pd.Categorical.from_codes(iris['target'], iris['target_names'])
+k_folds = 10
+randomForest = RandomForestClassifier(random_state=0)
 
-# Mi cross validation
-my_cv = CrossValidator(df, 10, RandomForestClassifier())
+# Mi cross-validation
+my_cv = CrossValidator(df, k_folds, randomForest)
 score = my_cv.crossValidate()
 print('My CV accuracy: ' + str(score*100) + '%')
 
-# S
+# Sklearn cross-validation
+cv = cross_validate(randomForest, iris['data'], iris['target'], cv=k_folds)
+score = np.sum(cv["test_score"]/k_folds)
+print('Sklearn CV accuracy: ' + str(score*100) + '%')
