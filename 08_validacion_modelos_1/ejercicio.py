@@ -4,7 +4,7 @@ from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
-from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_validate, ParameterGrid
 
 class CrossValidator:
     def __init__(self, dataset, k_folds, algorithm):
@@ -65,8 +65,6 @@ score = np.sum(cv["test_score"]/k_folds)
 print('Sklearn CV accuracy: ' + str(score*100) + '%')
 
 # RandomForest grid-search
-from sklearn.model_selection import ParameterGrid
-
 def rfGridSearch(algorithm, data):
     bestParams = None
     bestScore = 0    
