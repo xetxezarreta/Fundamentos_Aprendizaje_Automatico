@@ -84,8 +84,8 @@ def rfGridSearch(algorithm, data):
             bestParams = params
             bestScore = score
     
-    print("My GridSearch best score: " + str(bestScore*100))
-    print("My GridSearch best params: " + str(bestParams) + '%')
+    print("My GridSearch best score: " + str(bestScore*100) + '%')
+    print("My GridSearch best params: " + str(bestParams))
 
 # My grid-search
 rfGridSearch(RandomForestClassifier, df)
