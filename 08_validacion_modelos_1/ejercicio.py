@@ -22,7 +22,6 @@ class CrossValidator:
                 test = fold
             else:
                 train.append(fold)
-
         return pd.concat(train), test
 
     def crossValidate(self):
@@ -43,8 +42,9 @@ class CrossValidator:
             # Calculamos el accuracy
             score += accuracy_score(y_test, y_pred)
         score /= self.k_folds
-        return score      
+        return score     
 
+# Preparación de los datos
 iris = datasets.load_iris()
 x = iris['data']
 y = iris['target']
@@ -63,3 +63,27 @@ print('My CV accuracy: ' + str(score*100) + '%')
 cv = cross_validate(randomForest, x, y, cv=k_folds)
 score = np.sum(cv["test_score"]/k_folds)
 print('Sklearn CV accuracy: ' + str(score*100) + '%')
+
+# RandomForest grid-search
+from sklearn.model_selection import ParameterGrid
+
+def rfGridSearch(algorithm, data):
+    bestParams = None
+    bestScore = 0    
+
+    all_params = {"n_estimators": [50, 100, 150], "max_depth": [1,2,3], "random_state":[0,1,2]}    
+    grid = ParameterGrid(all_params)
+
+    for params in grid:
+        rf = algorithm(**params)
+        my_cv = CrossValidator(data, k_folds, rf)
+        score = my_cv.crossValidate()
+
+        if score > bestScore:
+            bestParams = params
+            bestScore = score
+    
+    print("My GridSearch best score: " + str(bestScore*100))
+    print("My GridSearch best params: " + str(bestParams) + '%')
+
+rfGridSearch(RandomForestClassifier, df)
