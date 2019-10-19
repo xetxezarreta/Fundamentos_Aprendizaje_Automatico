@@ -69,6 +69,7 @@ def rfGridSearch(algorithm, data):
     bestParams = None
     bestScore = 0    
 
+    # Podemos añadir mas valore o parámatros al diccionario (tarda mas por el aumento de combinaciones)
     all_params = {"n_estimators": [50, 100, 150], "max_depth": [1,2,3], "random_state":[0,1,2]}    
     grid = ParameterGrid(all_params)
 
@@ -84,4 +85,5 @@ def rfGridSearch(algorithm, data):
     print("My GridSearch best score: " + str(bestScore*100))
     print("My GridSearch best params: " + str(bestParams) + '%')
 
+# My grid-search
 rfGridSearch(RandomForestClassifier, df)
