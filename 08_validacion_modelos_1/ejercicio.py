@@ -67,7 +67,6 @@ print('Sklearn CV accuracy: ' + str(score*100) + '%')
 
 # RandomForest grid-search
 all_params = {"n_estimators": [50, 100, 150], "max_depth": [1,2,3], "random_state":[0,1,2]}    
-
 def rfGridSearch(algorithm, data):
     bestParams = None
     bestScore = 0    
