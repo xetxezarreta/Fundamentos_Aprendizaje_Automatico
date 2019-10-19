@@ -46,8 +46,11 @@ class CrossValidator:
         return score      
 
 iris = datasets.load_iris()
-df = pd.DataFrame(iris['data'], columns=iris['feature_names'])
-df['target'] = pd.Categorical.from_codes(iris['target'], iris['target_names'])
+x = iris['data']
+y = iris['target']
+
+df = pd.DataFrame(x, columns=iris['feature_names'])
+df['target'] = pd.Categorical.from_codes(y, iris['target_names'])
 k_folds = 10
 randomForest = RandomForestClassifier(random_state=0)
 
@@ -57,6 +60,6 @@ score = my_cv.crossValidate()
 print('My CV accuracy: ' + str(score*100) + '%')
 
 # Sklearn cross-validation
-cv = cross_validate(randomForest, iris['data'], iris['target'], cv=k_folds)
+cv = cross_validate(randomForest, x, y, cv=k_folds)
 score = np.sum(cv["test_score"]/k_folds)
 print('Sklearn CV accuracy: ' + str(score*100) + '%')
