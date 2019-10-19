@@ -1,12 +1,11 @@
 # Xabier Etxezarreta
-
 import numpy as np
 import pandas as pd
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.utils import shuffle
-from sklearn.model_selection import cross_validate, ParameterGrid
+from sklearn.model_selection import cross_validate, ParameterGrid, GridSearchCV
 
 class CrossValidator:
     def __init__(self, dataset, k_folds, algorithm):
@@ -67,12 +66,13 @@ score = np.sum(cv["test_score"]/k_folds)
 print('Sklearn CV accuracy: ' + str(score*100) + '%')
 
 # RandomForest grid-search
+all_params = {"n_estimators": [50, 100, 150], "max_depth": [1,2,3], "random_state":[0,1,2]}    
+
 def rfGridSearch(algorithm, data):
     bestParams = None
     bestScore = 0    
 
-    # Podemos añadir mas valores o parámatros al diccionario (tarda mas por el aumento de combinaciones)
-    all_params = {"n_estimators": [50, 100, 150], "max_depth": [1,2,3], "random_state":[0,1,2]}    
+    # Podemos añadir mas valores o parámatros al diccionario (tarda mas por el aumento de combinaciones)    
     grid = ParameterGrid(all_params)
 
     for params in grid:
@@ -89,3 +89,9 @@ def rfGridSearch(algorithm, data):
 
 # My grid-search
 rfGridSearch(RandomForestClassifier, df)
+
+# Sklearn grid-search
+clf = GridSearchCV(RandomForestClassifier(), all_params, cv=k_folds)
+clf.fit(x, y)
+print("Sklearn GridSearch best score: " + str(clf.best_score_*100) + '%')
+print("Sklearn GridSearch best params: " + str(clf.best_params_))
