@@ -70,8 +70,9 @@ all_params = {"n_estimators": [50, 100, 150], "max_depth": [1,2,3], "random_stat
 def rfGridSearch(algorithm, data):
     bestParams = None
     bestScore = 0    
-
-    # Podemos añadir mas valores o parámatros al diccionario (tarda mas por el aumento de combinaciones)    
+    
+    # Obtiene todas las combinaciones definidas en el diccionario
+    # En el diccionario podemos meter cualquier parámetro del algoritmo
     grid = ParameterGrid(all_params)
 
     for params in grid:
