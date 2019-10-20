@@ -73,6 +73,7 @@ def rfGridSearch(algorithm, data):
     
     # Obtiene todas las combinaciones definidas en el diccionario
     # En el diccionario podemos meter cualquier parámetro del algoritmo
+    # https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ParameterGrid.html
     grid = ParameterGrid(all_params)
 
     for params in grid:
